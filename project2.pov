@@ -8,7 +8,7 @@ global_settings{ assumed_gamma 1.0 }
 //--------------------------------------------------------------------------
 // camera ------------------------------------------------------------------
 #declare Camera_0 = camera {perspective angle 75               // front view
-  location  <0.0 , 3.0 ,-8.0>
+  location  <0.0 , 3.0 ,-13.0>
   right     x*image_width/image_height
   look_at   <0.0 , 1.0 , 0.0>}
 #declare Camera_1 = camera {/*ultra_wide_angle*/ angle 90   // diagonal view
@@ -23,7 +23,30 @@ global_settings{ assumed_gamma 1.0 }
   location  <0.0 , 3.0 ,-0.001>
   right     x*image_width/image_height
   look_at   <0.0 , 1.0 , 0.0>}
-camera{Camera_0}
+camera{Camera_0
+  #if(frame_number >200 & frame_number <=220)
+    translate <0,3,-14>
+    #elseif(frame_number >220 & frame_number <=240)
+    translate <0,3,-13>
+    #elseif(frame_number >240 & frame_number <=260)
+    translate <0,3,-12>
+    #elseif(frame_number >260 & frame_number <=280)
+    translate <0,3,-11>
+    #elseif(frame_number >260 & frame_number <=500)
+    translate <0,3,-10>
+    #elseif(frame_number >500 & frame_number <530)
+    translate <0,3,-8>
+    #elseif (frame_number >=530 & frame_number <560)
+    translate <0,3,-7>
+    #elseif (frame_number >=530 & frame_number <560)
+    translate <0,2,-6>
+    #elseif (frame_number >=560 & frame_number <590)
+    translate <0,2,-5>
+    #elseif (frame_number >=590  & frame_number <700)
+    rotate  <0, 60*clock +1, 0>
+    translate <0,2,3>
+  #end
+}
 // sun ----------------------------------------------------------------------
 light_source{< 3000,3000,-3000> color White}
 // sky ----------------------------------------------------------------------
@@ -151,9 +174,44 @@ texture{ White_Wood
 #declare P7 = <-2.00, 1, -1.00>;
 #declare P8 = <-2.00, 1, -2.00>;
 
+//spline2
+#declare z1 =<-6.00, 1, 6.00>;
+#declare z2 =<-6.00, 1, 4.00>;
+#declare z3 =<-6.00, 1, 2.00>;
+#declare z4 =<-6.00, 1, 0>;
+#declare z5 =<-6.00, 1, -2.00>;
+#declare z6 =<-6.00, 1, -4.00>;
+#declare z7 =<-6.00, 1, -6.00>;
+#declare z8 =<-4.00, 1, -6.00>;
+#declare z9 =<-2.00, 1, -6.00>;
+#declare z10 =<0.00, 1, -6.00>;
+#declare z11 =<2.00, 1, -6.00>;
+#declare z12 =<4.00, 1, -6.00>;
+#declare z13 =<6.00, 1, -6.00>;
+#declare z14 =<6.00, 1, -4.00>;
+#declare z15 =<6.00, 1, -2.00>;
+#declare z16 =<6.00, 1, 0>;
+#declare z17 =<6.00, 1, 2.00>;
+#declare z18 =<6.00, 1, 4.00>;
+#declare z19 =<6.00, 1, 6.00>;
+
+#declare y1 =<-4.00, 1, 4.00>;
+#declare y2 =<-4.00, 1, 2.00>;
+#declare y3 =<-4.00, 1, 0>;
+#declare y4 =<-4.00, 1, -2.00>;
+#declare y5 =<-4.00, 1, -4.00>;
+#declare y6 =<-2.00, 1, -4.00>;
+#declare y7 =<0.00, 1, -4.00>;
+#declare y8 =<2.00, 1, -4.00>;
+#declare y9 =<4.00, 1, -4.00>;
+#declare y10 =<4.00, 1, -2.00>;
+#declare y11 =<4.00, 1, 0>;
+#declare y12 =<4.00, 1, 2.00>;
+#declare y13 =<4.00, 1, 4.00>;
+
 #declare Spline_tacho_basura =
   spline {
-    natural_spline
+    cubic_spline
     -0.150, P7, // control point
     0.300, P1, // starting point
     0.225, P2,
@@ -169,47 +227,62 @@ texture{ White_Wood
 #declare Spline_esfera =
   spline {
     natural_spline
-    -0.350, P7 - 0.05, // control point
-    0.300, P1 -0.05, // starting point
-    0.125, P2 -0.05,
-    0.250, P3 -0.05,
-    0.420, P4 -0.05,
-    0.490, P5 -0.05,
-    0.780, P6 -0.05,
-    0.900, P7 -0.05,
-    1.000, P1 -0.05, // end point
-    1.125, P2 -0.05  // control point
+    -0.350, z1, // control point
+    0.300, z2, // starting point
+    0.125, z3,
+    0.250, z4,
+    0.420, z5,
+    0.490, z6,
+    0.780, z7,
+    0.900, z8,
+    1.000, z9
+    1.125, z10,
+    0.300, z11, // starting point
+    0.125, z12,
+    0.250, z13,
+    0.420, z14,
+    0.490, z15,
+    0.780, z16,
+    0.900, z17,
+    1.000, z18
+    1.125, z19
   }// end of spline ---------------
 
 
 #declare Spline_box =
   spline {
-    natural_spline
-    -0.250, P7 - 0.10, // control point
-    0.400, P1 -0.15, // starting point
-    0.125, P2 -0.15,
-    0.250, P3 -0.05,
-    0.420, P4 -0.15,
-    0.490, P5 -0.15,
-    0.780, P6 -0.15,
-    0.900, P7 -0.15,
-    1.000, P1 -0.15, // end point
-    1.125, P2 -0.15  // control point
+    cubic_spline
+    -0.350, y1, // control point
+    0.300, y2, // starting point
+    0.125, y3,
+    0.250, y4,
+    0.420, y5,
+    0.490, y6,
+    0.780, y7,
+    0.900, y8,
+    1.000, y9
+    1.125, y10,
+    0.300, y11,
+    0.125, y12,
+    0.250, y13
   }// end of spline ---------------
 
 #declare Spline_torus =
   spline {
-    natural_spline
-    -0.250, P7 + 0.20, // control point
-    0.000, P1 +0.25, // starting point
-    0.125, P2 +0.25,
-    0.250, P3 +0.25,
-    0.420, P4 +0.35,
-    0.490, P5 +0.45,
-    0.780, P6 +0.45,
-    0.900, P7 +0.45,
-    1.000, P1 +0.45, // end point
-    1.125, P2 +0.35  // control point
+    cubic_spline
+    -0.300, y2, // starting point
+    0.125, y3,
+    0.250, y4,
+    0.420, y5,
+    0.490, y6,
+    0.780, y7,
+    0.900, y8,
+    1.000, y9
+    1.125, y10,
+    0.300, y11,
+    0.125, y12,
+    0.125, y12,
+    0.250, y2
   }// end of spline ---------------
 
 //END SPLINES
@@ -291,17 +364,25 @@ plane{ <0,0.25,0>, -0.1
 //----------------------------------------------------------
 
 
+//estrella
+object{
+  union{
+    #local Nr = 0;     // start
+    #local EndNr = 6;  // end
+    #while (Nr< EndNr)
+      object{Ray  rotate<0,Nr * 360/EndNr,0>}
 
-union{
-  #local Nr = 0;     // start
-  #local EndNr = 6;  // end
-  #while (Nr< EndNr)
-    object{Ray  rotate<0,Nr * 360/EndNr,0>}
-
-    #local Nr = Nr + 1;// next Nr
-  #end // ------------- end of loop
-
-  scale <0.3,0.3,0.3> rotate<90,360*clock,0> translate<-1.20,1.2,0> } // end of union
+      #local Nr = Nr + 1;// next Nr
+    #end // ------------- end of loop
+  } // end of union
+  #if (frame_number <500)
+    scale <0.5,0.5,0.5> rotate<90,360*clock*frame_number/2,0> translate<0,1,0>
+    #elseif(frame_number >=500 & frame_number <600)
+    scale <0.5,0.5,0.5> rotate<90,200/frame_number> translate<0,1.5,0>
+  #else
+    scale <0.5,0.5,0.5> rotate<90,200/frame_number> translate<0,1.5*clock+0.8,0>
+  #end
+}
 
 //------------------------------------------------------- end
 //sphere macro
@@ -685,5 +766,6 @@ object{
 
   }
   scale <0.5,0.5,0.5>
+  translate <1,1,2>
   rotate < 0,360*clock,0>
 }
